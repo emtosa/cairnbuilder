@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#78716c"/>
+  <!-- Ground shadow -->
+  <ellipse cx="16" cy="29" rx="8" ry="2" fill="#57534e" opacity="0.5"/>
+  <!-- Bottom stone (large) -->
+  <rect x="8" y="22" width="16" height="6" rx="3" fill="#a8a29e"/>
+  <!-- Middle stone -->
+  <rect x="10" y="15" width="12" height="7" rx="3" fill="#78716c"/>
+  <!-- Upper stone -->
+  <rect x="11.5" y="9" width="9" height="6" rx="3" fill="#57534e"/>
+  <!-- Top stone (small) -->
+  <rect x="13" y="4" width="6" height="5" rx="2.5" fill="#44403c"/>
+  <!-- Highlight -->
+  <ellipse cx="13" cy="24" rx="3" ry="1.5" fill="#d6d3d1" opacity="0.4"/>
+</svg>
