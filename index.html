@@ -35,6 +35,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
+      <li><a href="#try">Try It</a></li>
       <li><a href="#download">Download</a></li>
       <li><a href="support.html">Support</a></li>
       <li><a href="privacy.html">Privacy</a></li>
@@ -108,6 +109,212 @@
         <p>No accounts, no ads, no cloud. Your sessions never leave your device. Works offline, always available.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- TRY IT -->
+<section id="try">
+  <style>
+    #try { background: var(--stone-100); }
+
+    .demo-layout {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .demo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      flex: 1 1 260px;
+      max-width: 300px;
+    }
+
+    /* Speed toggle */
+    .demo-speed-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .demo-speed-btn {
+      padding: 5px 18px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: none;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .demo-speed-btn.active {
+      background: var(--stone-900);
+      color: #fff;
+      border-color: var(--stone-900);
+    }
+    .demo-speed-btn:hover:not(.active) {
+      border-color: var(--stone-500);
+      color: var(--text-primary);
+    }
+
+    /* Timer display */
+    #demo-timer {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    /* Control buttons */
+    .demo-btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .demo-btn-row .btn { font-size: .88rem; padding: 10px 18px; }
+
+    /* Session counter */
+    #demo-sessions {
+      text-align: center;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Scene card */
+    .demo-scene-card { position: relative; }
+    .demo-scene {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 24px;
+      min-height: 200px;
+      padding-top: 8px;
+    }
+    #demo-cairn { flex-shrink: 0; overflow: visible; }
+
+    /* Stick figure */
+    .demo-guide { flex-shrink: 0; overflow: visible; }
+
+    /* Right arm: pivots at its top-left (shoulder) using fill-box */
+    .guide-rarm {
+      transform-box: fill-box;
+      transform-origin: 0% 0%;
+    }
+    @keyframes rarm-wave {
+      0%, 100% { transform: rotate(0deg);   }
+      50%       { transform: rotate(-68deg); }
+    }
+    .guide-wave .guide-rarm {
+      animation: rarm-wave 0.9s ease-in-out infinite;
+    }
+
+    @keyframes guide-bounce {
+      0%, 100% { transform: translateY(0)    rotate(0deg);  }
+      30%       { transform: translateY(-10px) rotate(-4deg); }
+      70%       { transform: translateY(-6px)  rotate(4deg);  }
+    }
+    .guide-dance { animation: guide-bounce 0.38s ease-in-out infinite; }
+
+    /* Confetti */
+    #demo-confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .demo-confetti-p {
+      position: absolute;
+      top: 8%;
+      animation: confetti-fall linear forwards;
+    }
+    @keyframes confetti-fall {
+      0%   { transform: translateY(0)     rotate(0deg);   opacity: 1; }
+      100% { transform: translateY(200px) rotate(560deg); opacity: 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .demo-card { max-width: 100%; }
+      #demo-timer { font-size: 2.6rem; }
+    }
+  </style>
+
+  <div class="container">
+    <div class="features-header">
+      <h2>▶ Try It</h2>
+      <p>Start a focus session right here.</p>
+    </div>
+
+    <div class="demo-layout">
+
+      <!-- Timer card -->
+      <div class="demo-card">
+        <div class="demo-speed-row">
+          <button class="demo-speed-btn" data-mode="25min">25 min</button>
+          <button class="demo-speed-btn active" data-mode="1min">1 min</button>
+        </div>
+        <div id="demo-timer">01:00</div>
+        <div class="demo-btn-row">
+          <button id="demo-start" class="btn btn-primary">▶ Start Session</button>
+          <button id="demo-pause" class="btn btn-secondary" style="display:none">Pause</button>
+          <button id="demo-reset" class="btn btn-secondary" style="display:none">Reset</button>
+        </div>
+        <div id="demo-sessions">🪨 0 sessions today</div>
+      </div>
+
+      <!-- Cairn + guide card -->
+      <div class="demo-card demo-scene-card">
+        <div id="demo-confetti"></div>
+        <div class="demo-scene">
+
+          <!-- Cairn SVG (populated by demo.js) -->
+          <svg id="demo-cairn" xmlns="http://www.w3.org/2000/svg" width="120"></svg>
+
+          <!-- Stick-figure guide -->
+          <svg id="demo-guide" class="demo-guide guide-idle"
+               xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 50 85" width="50" height="85">
+            <!-- head -->
+            <circle cx="25" cy="11" r="7.5"
+                    fill="none" stroke="var(--stone-700)" stroke-width="2.5"/>
+            <!-- body -->
+            <line x1="25" y1="19" x2="25" y2="53"
+                  stroke="var(--stone-700)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- left arm (static) -->
+            <line x1="25" y1="29" x2="9"  y2="42"
+                  stroke="var(--stone-700)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- right arm: drawn from (0,0)→(16,13) inside a group
+                 translated to shoulder (25,29); transform-origin 0% 0% pivots at shoulder -->
+            <g class="guide-rarm" transform="translate(25,29)">
+              <line x1="0" y1="0" x2="16" y2="13"
+                    stroke="var(--stone-700)" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <!-- left leg -->
+            <line x1="25" y1="53" x2="14" y2="70"
+                  stroke="var(--stone-700)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- right leg -->
+            <line x1="25" y1="53" x2="36" y2="70"
+                  stroke="var(--stone-700)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+
+        </div>
+      </div>
+
+    </div><!-- /.demo-layout -->
   </div>
 </section>
 
@@ -187,5 +394,6 @@
   </div>
 </footer>
 
+<script src="js/demo.js"></script>
 </body>
 </html>
